@@ -1,0 +1,4 @@
+input_data_path: "data/raw/train.tsv"
+output_data_path: "models/predictions.csv"
+pipeline_path: "models/transformer.pkl"
+model_path: "models/model.pkl"

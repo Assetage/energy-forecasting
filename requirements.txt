@@ -1,0 +1,10 @@
+Faker
+omegaconf
+pandas
+marshmallow_dataclass==8.4.1
+numpy
+hydra_core
+pytest==6.2.3
+dataclasses==0.6
+hydra
+scikit_learn==1.0

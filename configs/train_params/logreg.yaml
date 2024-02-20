@@ -1,0 +1,5 @@
+# @package _group_
+model_type: "LogisticRegression"
+penalty: "l2"
+tol: 1e-4
+random_state: 21

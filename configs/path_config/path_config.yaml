@@ -1,0 +1,5 @@
+# @package _group_
+input_data_path: "data/raw/train.tsv"
+output_model_path: "src/models/model_"
+output_transformer_path: "src/models/transformer.pkl"
+metric_path: "src/models/metrics.json"
