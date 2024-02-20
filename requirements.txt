@@ -6,5 +6,4 @@ numpy
 hydra_core
 pytest==6.2.3
 dataclasses==0.6
-hydra
 scikit_learn==1.0
