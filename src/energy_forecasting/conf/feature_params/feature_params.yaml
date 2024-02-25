@@ -1,0 +1,5 @@
+# @package _group_
+feature_params:
+  datetime_col: "Datetime"
+  target_col: "PJMW_MW"
+  

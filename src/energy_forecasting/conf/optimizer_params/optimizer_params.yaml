@@ -1,0 +1,4 @@
+# @package _group_
+model_name: "RandomForestClassifier"
+model_param_space:
+  - "n_estimators : 30"

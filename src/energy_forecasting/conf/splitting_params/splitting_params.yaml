@@ -1,0 +1,7 @@
+# @package _group_
+splitting_params:
+  n_splits: 5
+  hours: 24
+  days: 365
+  years: 1
+  gap: 24

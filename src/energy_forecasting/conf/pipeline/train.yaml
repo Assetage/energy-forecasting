@@ -1,0 +1,8 @@
+# @package _group_
+defaults:
+  - /path_config/path_config
+  - /splitting_params/splitting_params
+  - /train_params/rf
+  - /feature_params/feature_params
+
+name: train
