@@ -1,3 +1,4 @@
 defaults:
   - pipeline: train
   - train_params: rf
+  - optimizer_params: rf

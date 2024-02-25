@@ -1,11 +1,17 @@
-from .train_model import train_model, run_cross_validation, select_model
+from .train_model import (train_model, 
+                          run_cross_validation, 
+                          select_model,
+                          objective,
+                          define_space)
 from .predict_model import (
-    make_prediction,
+    make_prediction
 )
 
 __all__ = [
     "train_model",
     "make_prediction",
     "run_cross_validation",
-    "select_model"
+    "select_model",
+    "objective",
+    "define_space"
 ]

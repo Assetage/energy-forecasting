@@ -1,0 +1,8 @@
+# @package _group_
+optimizer_params:
+  model_type: "MLPRegressor"
+  hidden_layer_sizes_from: "8"
+  hidden_layer_sizes_to: "64"
+  max_iter: 50
+  random_state: 21
+  verbose: True

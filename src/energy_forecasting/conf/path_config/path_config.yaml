@@ -1,5 +1,6 @@
 # @package _group_
 path_config:
   input_data_path: "data/raw/PJMW_hourly.csv"
-  output_model_path: "src/energy_forecasting/models/model_"
-  cross_val_scores: "src/energy_forecasting/models/cross_val_scores.json"
+  output_model_path: "models/model_"
+  cross_val_scores: "models/cross_val_scores.json"
+  opt_results: "models/opt_results.json"

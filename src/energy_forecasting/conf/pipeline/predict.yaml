@@ -1,6 +1,6 @@
 # @package _group_
-input_data_path: "data/raw/PJMW_hourly.csv"
-output_data_path: "models/predictions.csv"
-pipeline_path: "models/transformer.pkl"
-model_path: "models/model.pkl"
-name: predict
+defaults:
+  - input_data_path: "data/raw/PJMW_hourly.csv"
+  - output_data_path: "data/produced/predictions.csv"
+  - output_plot_path: "data/produced/predictions_plot.png"
+  - model_path: "models/model_RandomForestRegressor.pkl"

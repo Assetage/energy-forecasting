@@ -1,9 +1,14 @@
 from .feature_params import FeatureParams
 from .split_params import SplittingParams
+from .optimizer_params import RandomForestOptParams, MLPOptParams
+from .optimizer_pipeline_params import (
+    OptimizerPipelineParams,
+    OptimizerPipelineParamsSchema
+)
 from .train_params import LogRegParams, RandomForestParams, MLPParams
 from .train_pipeline_params import (
     TrainingPipelineParamsSchema,
-    TrainingPipelineParams,
+    TrainingPipelineParams
 )
 from .path_params import PathParams
 from .predict_pipeline_params import (
@@ -19,5 +24,10 @@ __all__ = [
     "RandomForestParams",
     "MLPParams",
     "PredictingPipelineParams",
-    "PathParams"
+    "PathParams",
+    "OptimizerPipelineParams",
+    "OptimizerPipelineParamsSchema",
+    "RandomForestOptParams",
+    "MLPOptParams"
+
 ]

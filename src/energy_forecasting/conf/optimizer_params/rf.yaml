@@ -1,0 +1,8 @@
+# @package _group_
+optimizer_params:
+  model_type: "RandomForestRegressor"
+  n_estimators: 10
+  max_depth_from: 5
+  max_depth_to: 20
+  random_state: 21
+  verbose: 1

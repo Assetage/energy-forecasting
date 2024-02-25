@@ -1,0 +1,18 @@
+[
+    {
+        "model_params": {
+            "max_depth": 5,
+            "max_depth_from": 5,
+            "max_depth_to": 20,
+            "model_type": "RandomForestRegressor",
+            "n_estimators": 10,
+            "random_state": 21,
+            "verbose": 1
+        },
+        "model_type": "RandomForestRegressor",
+        "timestamp": "2024-02-26 03:51:16",
+        "tuned_params": {
+            "max_depth": 17.0
+        }
+    }
+]
