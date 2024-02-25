@@ -20,6 +20,7 @@ SklearnRegressorModel = Union[RandomForestRegressor, LinearRegression, MLPRegres
 def select_model(train_params: Union[LogRegParams, RandomForestParams, MLPParams],
                 ) -> SklearnRegressorModel:
     model_type = train_params["model_type"]
+    print("TRAIN PARAMS", train_params)
     if model_type == "RandomForestRegressor":
         model = RandomForestRegressor(
             n_estimators=train_params["n_estimators"],
@@ -29,18 +30,15 @@ def select_model(train_params: Union[LogRegParams, RandomForestParams, MLPParams
         )
 
     elif model_type == "LinearRegression":
-        model = LinearRegression(
-            penalty=train_params["penalty"],
-            tol=train_params["tol"],
-            random_state=train_params["random_state"],
-        )
+        model = LinearRegression()
 
     elif model_type == "MLPRegressor":
-        h_layers = tuple(int(i) for i in (train_params.hidden_layer_sizes.split(',')))
+        h_layers = tuple(int(i) for i in (train_params["hidden_layer_sizes"].split(',')))
         model = MLPRegressor(
             hidden_layer_sizes=h_layers,
             max_iter=train_params["max_iter"],
-            random_state=train_params["random_state"]
+            random_state=train_params["random_state"],
+            verbose=train_params["verbose"]
         )
     else:
         raise NotImplementedError()

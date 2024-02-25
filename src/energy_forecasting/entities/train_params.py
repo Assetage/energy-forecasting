@@ -4,9 +4,6 @@ from dataclasses import dataclass, field
 @dataclass()
 class LogRegParams:
     model_type: str = field(default="LinearRegression")
-    penalty: str = field(default="l2")
-    tol: float = field(default=1e-4)
-    random_state: int = field(default=21)
 
 
 @dataclass()
@@ -24,3 +21,4 @@ class MLPParams:
     hidden_layer_sizes: str = field(default="128")
     max_iter: int = field(default=300)
     random_state: int = field(default=21)
+    verbose: bool = field(default=True)

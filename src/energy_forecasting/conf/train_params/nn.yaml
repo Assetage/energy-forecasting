@@ -1,0 +1,7 @@
+# @package _group_
+train_params:
+  model_type: "MLPRegressor"
+  hidden_layer_sizes : "16"
+  max_iter : 50
+  random_state: 21
+  verbose: True

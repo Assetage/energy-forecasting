@@ -11,8 +11,8 @@ import hydra
 from .data import time_series_split
 from .entities.train_pipeline_params import TrainingPipelineParams, TrainingPipelineParamsSchema
 from .features.build_features import prepare_dataset
-from .models import train_model, make_prediction, run_cross_validation, select_model
-from .utils import read_data, save_pkl_file, save_metrics_to_json, save_cross_val_results_to_json
+from .models import train_model, run_cross_validation, select_model
+from .utils import read_data, save_pkl_file, save_cross_val_results_to_json
 
 logger = logging.getLogger("train_pipeline")
 
@@ -20,7 +20,7 @@ logger = logging.getLogger("train_pipeline")
 def train_pipeline(
         training_pipeline_params: TrainingPipelineParams,
 ) -> NoReturn:
-    logger.info(f"Start train pipeline with params {training_pipeline_params}")
+    logger.info(f"Start train pipeline with params {OmegaConf.to_yaml(training_pipeline_params)}")
     model_type = training_pipeline_params.train_params['model_type']
     logger.info(f"Model is {model_type}")
 

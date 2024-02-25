@@ -1,6 +1,0 @@
-# @package _group_
-train_params:
-  model_type: "LinearRegression"
-  penalty: "l2"
-  tol: 1e-4
-  random_state: 21
