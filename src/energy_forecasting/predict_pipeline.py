@@ -2,13 +2,13 @@ import os
 import logging.config
 
 import pandas as pd
-from omegaconf import DictConfig
+from omegaconf import DictConfig, OmegaConf
 import hydra
 
-from src.entities.predict_pipeline_params import PredictingPipelineParams, \
+from .entities.predict_pipeline_params import PredictingPipelineParams, \
     PredictingPipelineParamsSchema
-from src.models import make_prediction
-from src.utils import read_data, load_pkl_file
+from .models import make_prediction
+from .utils import read_data, load_pkl_file
 
 logger = logging.getLogger("ml_project/predict_pipeline")
 
@@ -40,16 +40,11 @@ def predict_pipeline(evaluating_pipeline_params: PredictingPipelineParams):
     return df_predicts
 
 
-def predict_pipeline_start(cfg=None):
+def predict_pipeline_start(cfg: DictConfig):
     if cfg is None:
-        cfg = hydra.utils.get_original_cwd() + "/configs/predict_config.yaml"
+        cfg = hydra.utils.get_original_cwd() + "/src/energy_forecasting/conf/predict_config.yaml"
         with open(cfg, 'r') as f:
-            cfg= omegaconf.load(f)
-    os.chdir(hydra.utils.to_absolute_path(".."))
+            cfg= OmegaConf.load(f)
     schema = PredictingPipelineParamsSchema()
     params = schema.load(cfg)
     predict_pipeline(params)
-
-
-if __name__ == "__main__":
-    predict_pipeline_start()

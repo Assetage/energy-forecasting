@@ -1,17 +1,16 @@
 from typing import Tuple
 
 import pandas as pd
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import TimeSeriesSplit
 
-from src.entities import SplittingParams
+from ..entities import SplittingParams
 
 
-def split_train_val_data(
-        data: pd.DataFrame,
+def time_series_split(
+        df: pd.DataFrame,
         params: SplittingParams
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
 
-    train_data, test_data = train_test_split(
-        data, test_size=params.val_size, random_state=params.random_state
-    )
-    return train_data, test_data
+    tss = TimeSeriesSplit(n_splits=params.n_splits, test_size=params.hours*params.days*params.years, gap=params.gap)
+    df = df.sort_index()
+    return df, tss

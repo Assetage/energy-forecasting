@@ -4,6 +4,7 @@ pandas
 marshmallow_dataclass==8.4.1
 numpy
 hydra_core
+typeguard
 pytest==6.2.3
 dataclasses==0.6
 scikit_learn==1.0

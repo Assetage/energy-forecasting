@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Dict, Any, Union
 
 from dataclasses import dataclass
 from .split_params import SplittingParams
@@ -14,7 +14,7 @@ class TrainingPipelineParams:
     path_config: PathParams
     splitting_params: SplittingParams
     feature_params: FeatureParams
-    train_params: Union[LogRegParams, RandomForestParams, MLPParams]
+    train_params: Dict[str, Any]
 
 
 TrainingPipelineParamsSchema = class_schema(TrainingPipelineParams)

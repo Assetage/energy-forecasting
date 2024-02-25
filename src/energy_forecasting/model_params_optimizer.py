@@ -6,12 +6,13 @@ import pandas as pd
 from sklearn.model_selection import GridSearchCV
 from omegaconf import DictConfig
 import hydra
+import marshmallow
 
-from src.data import split_train_val_data
-from src.entities.train_pipeline_params import TrainingPipelineParams, TrainingPipelineParamsSchema
-from src.features.build_features import get_target, build_transformer, prepare_dataset
-from src.models import train_model, make_prediction, evaluate_model
-from src.utils import read_data, save_pkl_file, save_metrics_to_json
+from .data import time_series_split
+from .entities.train_pipeline_params import TrainingPipelineParams, TrainingPipelineParamsSchema
+from .features.build_features import prepare_dataset
+from .models import train_model, make_prediction
+from .utils import read_data, save_pkl_file
 
 logger = logging.getLogger("optimizer_pipeline")
 
@@ -40,14 +41,11 @@ def optimaize_model_pipeline(
 
     clf.fit(train_df, train_target)
 
-
-@hydra.main(config_path="../configs", config_name="train_config")
 def opt_pipeline_start(cfg: DictConfig):
-    os.chdir(hydra.utils.to_absolute_path(".."))
     schema = TrainingPipelineParamsSchema()
-    params = schema.load(cfg)
-    optimaize_model_pipeline(params)
-
-
-if __name__ == "__main__":
-    opt_pipeline_start()
+    try:
+        params = schema.load(cfg)
+        optimaize_model_pipeline(params)
+    except marshmallow.exceptions.ValidationError as e:
+        logger.error(f"Configuration validation error: {e.messages}")
+        raise e

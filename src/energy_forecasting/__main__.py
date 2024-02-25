@@ -2,28 +2,26 @@
 # __main__.py
 
 import hydra
-from omegaconf import DictConfig
+from hydra import compose, initialize
+from omegaconf import DictConfig, OmegaConf
+import os
 
 from .predict_pipeline import predict_pipeline_start
 from .train_pipeline import train_pipeline_start
 from .model_params_optimizer import opt_pipeline_start
 
 
-@hydra.main(version_base=None, config_path=".../configs", config_name="config")
+@hydra.main(version_base=None, config_path=os.path.join(os.path.dirname(__file__), "conf"), config_name="config")
 def main(cfg: DictConfig):
-    """Function that run the pipeline given a configuration."""
-    cfg = hydra.utils.instantiate(cfg)
-
-    pipeline_args = dict(
-        pipeline=cfg.pipeline,
-        config=cfg
-    )
-    if cfg.pipeline=="predict":
-        predict_pipeline_start()
-    elif cfg.pipeline=="train":
-        train_pipeline_start()
-    elif cfg.pipeline=="optimize":
-        opt_pipeline_start()
+    pipeline_name = cfg._group_.name
+    cfg = cfg._group_
+    del cfg.name
+    if pipeline_name=="predict":
+        predict_pipeline_start(cfg)
+    elif pipeline_name=="train":
+        train_pipeline_start(cfg)
+    elif pipeline_name=="optimize":
+        opt_pipeline_start(cfg)
     else:
         raise KeyError(
             f"Unknown pipeline, must equal to predict / train / optimize, got instead `{cfg.pipeline}`."

@@ -1,3 +1,3 @@
-from .make_dataset import split_train_val_data
+from .make_dataset import time_series_split
 
-__all__ = ["split_train_val_data"]
+__all__ = ["time_series_split"]
