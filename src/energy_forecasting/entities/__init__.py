@@ -11,6 +11,7 @@ from .train_pipeline_params import (
     TrainingPipelineParams
 )
 from .path_params import PathParams
+from .predict_params import PredictParams
 from .predict_pipeline_params import (
     PredictingPipelineParams,
 )
@@ -28,6 +29,7 @@ __all__ = [
     "OptimizerPipelineParams",
     "OptimizerPipelineParamsSchema",
     "RandomForestOptParams",
-    "MLPOptParams"
+    "MLPOptParams",
+    "PredictParams"
 
 ]

@@ -24,13 +24,14 @@ def add_lags(df: pd.DataFrame, params: FeatureParams) -> pd.DataFrame:
     return df
 
 
-def prepare_dataset(df: pd.DataFrame, params: FeatureParams) -> pd.DataFrame:
+def prepare_dataset(df: pd.DataFrame, params: FeatureParams, dropna_bool = True) -> pd.DataFrame:
 
     df = df.set_index(params.datetime_col)
     df.index = pd.to_datetime(df.index)
     df[params.target_col] = df[params.target_col].replace(487, 4870)
     df = create_features(df)
     df = add_lags(df, params)
-    df.dropna(inplace=True)
+    if dropna_bool:
+        df.dropna(inplace=True)
 
     return df

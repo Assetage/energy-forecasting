@@ -58,3 +58,12 @@ def load_pkl_file(input_: str):
         res = pickle.load(fin)
     return res
 
+def save_pred_plot(df: pd.DataFrame, output_path: str) -> NoReturn:
+    ax = df['pred'].plot(figsize=(10, 5),
+                    ms=1,
+                    lw=1,
+                    title='Future Predictions')
+    fig = ax.get_figure()
+    fig.savefig(output_path)
+    
+    

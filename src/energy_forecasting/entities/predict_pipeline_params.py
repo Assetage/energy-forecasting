@@ -2,13 +2,11 @@ from dataclasses import dataclass
 
 from marshmallow_dataclass import class_schema
 from .feature_params import FeatureParams
+from .predict_params import PredictParams
 
 @dataclass()
 class PredictingPipelineParams:
-    input_data_path: str
-    output_data_path: str
-    pipeline_path: str
-    model_path: str
+    predict_params: PredictParams
     feature_params: FeatureParams
 
 

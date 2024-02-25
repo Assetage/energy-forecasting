@@ -17,11 +17,11 @@ def main(cfg: DictConfig):
     cfg = cfg._group_
     del cfg.name
     if pipeline_name=="predict":
-        del cfg.optimize_params
+        del cfg.optimizer_params
         del cfg.train_params
         predict_pipeline_start(cfg)
     elif pipeline_name=="train":
-        del cfg.optimize_params
+        del cfg.optimizer_params
         train_pipeline_start(cfg)
     elif pipeline_name=="optimize":
         del cfg.train_params
