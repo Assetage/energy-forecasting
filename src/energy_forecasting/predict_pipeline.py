@@ -25,12 +25,10 @@ def predict_pipeline(evaluating_pipeline_params: PredictingPipelineParams) -> No
 
     logger.info("Creating future df and concating it with an existing...")
     df_and_future = create_future_df(data, evaluating_pipeline_params.feature_params)
-    print("df and future", df_and_future["isFuture"].value_counts())
 
     logger.info("Building features...")
     data_transformed = prepare_dataset(df_and_future, evaluating_pipeline_params.feature_params, dropna_bool=False)
     df_sorted = data_transformed.sort_index()
-    print("df and future", df_sorted["isFuture"].value_counts())
 
     logger.info("Start prediction")
     df_w_predictions = make_prediction(df_sorted, model, evaluating_pipeline_params.feature_params)

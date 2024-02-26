@@ -7,6 +7,6 @@ hydra_core
 typeguard
 hyperopt
 matplotlib
-pytest==6.2.3
+pytest
 dataclasses==0.6
 scikit_learn==1.0

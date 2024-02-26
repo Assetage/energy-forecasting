@@ -20,6 +20,7 @@ To be done:
 1. Add more features
 2. Try other models
 3. Make better analysis notebook
+4. Cover more functions with tests
 
 ## **Project Organization**
 ------------

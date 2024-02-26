@@ -117,7 +117,7 @@ def define_space(model_type: str,
                 int(optimizer_params["hidden_layer_sizes_from"]),
                 int(optimizer_params["hidden_layer_sizes_to"]) + 1,
                 max_layers))
-            for _ in range(10)
+            for _ in range(3)
         ]),
     }
     
