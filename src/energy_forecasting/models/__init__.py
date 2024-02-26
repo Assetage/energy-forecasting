@@ -1,10 +1,10 @@
-from .train_model import (train_model, 
-                          run_cross_validation, 
-                          select_model,
-                          objective,
-                          define_space)
-from .predict_model import (
-    make_prediction, create_future_df
+from .predict_model import create_future_df, make_prediction
+from .train_model import (
+    define_space,
+    objective,
+    run_cross_validation,
+    select_model,
+    train_model,
 )
 
 __all__ = [
@@ -14,5 +14,5 @@ __all__ = [
     "select_model",
     "objective",
     "define_space",
-    "create_future_df"
+    "create_future_df",
 ]

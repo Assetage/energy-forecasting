@@ -1,18 +1,21 @@
+import datetime
 import json
+import os
 import pickle
 from typing import NoReturn
-import os
 
-import pandas as pd
 import numpy as np
-import datetime
+import pandas as pd
 
 
 def read_data(path: str) -> pd.DataFrame:
     data = pd.read_csv(path)
     return data
 
-def save_cross_val_results_to_json(file_path: str, model_type: str, scores: dict, params_dict: dict) -> NoReturn:
+
+def save_cross_val_results_to_json(
+    file_path: str, model_type: str, scores: dict, params_dict: dict
+) -> NoReturn:
     list_obj = []
     scores_dict = dict()
     timestamp = str(datetime.datetime.now().isoformat(sep=" ", timespec="seconds"))
@@ -25,14 +28,17 @@ def save_cross_val_results_to_json(file_path: str, model_type: str, scores: dict
     scores_dict["model_params"] = params_dict
 
     if os.path.isfile(file_path) is True:
-        with open(file_path,'r') as f:
+        with open(file_path) as f:
             list_obj = json.load(f)
     list_obj.append(scores_dict)
 
-    with open(file_path,'w') as f:
-        json.dump(list_obj, f, indent = 4, sort_keys = True, separators=(',',': '))
+    with open(file_path, "w") as f:
+        json.dump(list_obj, f, indent=4, sort_keys=True, separators=(",", ": "))
 
-def save_optimization_results_to_json(file_path: str, model_type: str, params_dict: dict, tuned_params: dict) -> NoReturn:
+
+def save_optimization_results_to_json(
+    file_path: str, model_type: str, params_dict: dict, tuned_params: dict
+) -> NoReturn:
     list_obj = []
     opt_params_dict = dict()
     timestamp = str(datetime.datetime.now().isoformat(sep=" ", timespec="seconds"))
@@ -42,28 +48,26 @@ def save_optimization_results_to_json(file_path: str, model_type: str, params_di
     opt_params_dict["tuned_params"] = tuned_params
 
     if os.path.isfile(file_path) is True:
-        with open(file_path,'r') as f:
+        with open(file_path) as f:
             list_obj = json.load(f)
     list_obj.append(opt_params_dict)
 
-    with open(file_path,'w') as f:
-        json.dump(list_obj, f, indent = 4, sort_keys = True, separators=(',',': '))
+    with open(file_path, "w") as f:
+        json.dump(list_obj, f, indent=4, sort_keys=True, separators=(",", ": "))
+
 
 def save_pkl_file(input_file, output_name: str) -> NoReturn:
     with open(output_name, "wb") as f:
         pickle.dump(input_file, f)
+
 
 def load_pkl_file(input_: str):
     with open(input_, "rb") as fin:
         res = pickle.load(fin)
     return res
 
+
 def save_pred_plot(df: pd.DataFrame, output_path: str) -> NoReturn:
-    ax = df['pred'].plot(figsize=(10, 5),
-                    ms=1,
-                    lw=1,
-                    title='Future Predictions')
+    ax = df["pred"].plot(figsize=(10, 5), ms=1, lw=1, title="Future Predictions")
     fig = ax.get_figure()
     fig.savefig(output_path)
-    
-    

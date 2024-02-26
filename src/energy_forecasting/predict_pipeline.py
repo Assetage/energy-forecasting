@@ -1,16 +1,16 @@
-import os
 import logging.config
 from typing import NoReturn
 
-import pandas as pd
-from omegaconf import DictConfig, OmegaConf
-import hydra
 import marshmallow
-from .entities.predict_pipeline_params import PredictingPipelineParams, \
-    PredictingPipelineParamsSchema
+from omegaconf import DictConfig
+
+from .entities.predict_pipeline_params import (
+    PredictingPipelineParams,
+    PredictingPipelineParamsSchema,
+)
 from .features.build_features import prepare_dataset
-from .models import make_prediction, create_future_df
-from .utils import read_data, load_pkl_file, save_pred_plot
+from .models import create_future_df, make_prediction
+from .utils import load_pkl_file, read_data, save_pred_plot
 
 logger = logging.getLogger("ml_project/predict_pipeline")
 
@@ -27,19 +27,28 @@ def predict_pipeline(evaluating_pipeline_params: PredictingPipelineParams) -> No
     df_and_future = create_future_df(data, evaluating_pipeline_params.feature_params)
 
     logger.info("Building features...")
-    data_transformed = prepare_dataset(df_and_future, evaluating_pipeline_params.feature_params, dropna_bool=False)
+    data_transformed = prepare_dataset(
+        df_and_future, evaluating_pipeline_params.feature_params, dropna_bool=False
+    )
     df_sorted = data_transformed.sort_index()
 
     logger.info("Start prediction")
-    df_w_predictions = make_prediction(df_sorted, model, evaluating_pipeline_params.feature_params)
+    df_w_predictions = make_prediction(
+        df_sorted, model, evaluating_pipeline_params.feature_params
+    )
 
-    df_w_predictions.to_csv(evaluating_pipeline_params.predict_params.output_data_path, header=True)
+    df_w_predictions.to_csv(
+        evaluating_pipeline_params.predict_params.output_data_path, header=True
+    )
     logger.info(
-        f"Prediction is done and saved to the file {evaluating_pipeline_params.predict_params.output_data_path}"
+        "Prediction is done and saved to the file"
+        f" {evaluating_pipeline_params.predict_params.output_data_path}"
     )
 
     logger.info("Saving predictions plot")
-    save_pred_plot(df_w_predictions, evaluating_pipeline_params.predict_params.output_plot_path)
+    save_pred_plot(
+        df_w_predictions, evaluating_pipeline_params.predict_params.output_plot_path
+    )
 
 
 def predict_pipeline_start(cfg: DictConfig):

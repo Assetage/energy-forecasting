@@ -27,13 +27,21 @@ def load_model_path() -> str:
 def metric_path() -> str:
     return "tests/test_metrics.json"
 
+
 @pytest.fixture(scope="session")
 def synthetic_data() -> pd.DataFrame:
     fake = Faker()
     Faker.seed(21)
     df = {
-        "Datetime": [fake.date_time_between_dates(date_start=datetime(2002,1,1), date_end=datetime(2018,12,31)) for _ in range(ROW_NUMS)],
-        "PJMW_MW": [fake.pyint(min_value=2000, max_value=8000) for _ in range(ROW_NUMS)]
+        "Datetime": [
+            fake.date_time_between_dates(
+                date_start=datetime(2002, 1, 1), date_end=datetime(2018, 12, 31)
+            )
+            for _ in range(ROW_NUMS)
+        ],
+        "PJMW_MW": [
+            fake.pyint(min_value=2000, max_value=8000) for _ in range(ROW_NUMS)
+        ],
     }
 
     return pd.DataFrame(data=df)

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Optional, Dict
+
 
 @dataclass
 class RandomForestOptParams:
@@ -9,6 +9,7 @@ class RandomForestOptParams:
     max_depth_to: int
     random_state: int
     verbose: int
+
 
 @dataclass
 class MLPOptParams:
