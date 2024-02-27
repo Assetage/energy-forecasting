@@ -136,5 +136,5 @@ You can run the tests with the following commands:
 
 ```shell
 # Unit tests
-make test
+pytest
 ```
