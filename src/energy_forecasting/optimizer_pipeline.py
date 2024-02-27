@@ -19,7 +19,24 @@ logger = logging.getLogger("optimizer_pipeline")
 
 def optimize_model_pipeline(
     optimizer_pipeline_params: OptimizerPipelineParams,
-) -> dict[str, float]:
+) -> None:
+    """Executes the optimization pipeline for a given model using the provided
+    configuration parameters.
+
+    This function performs several steps:
+    - Reads and logs the optimization parameters.
+    - Loads and preprocesses the input data.
+    - Splits the data into training and testing sets.
+    - Initializes the model specified in the configuration.
+    - Runs the hyperparameter optimization using the specified objective function
+      and hyperparameter space.
+    - Saves the best found hyperparameters to a specified JSON file.
+
+    Parameters:
+    - optimizer_pipeline_params (OptimizerPipelineParams): An object containing all the necessary
+      parameters for the optimization pipeline, including data paths, model type, feature
+      engineering parameters, and hyperparameter optimization settings.
+    """
     logger.info(
         "Start optimizer pipeline with params"
         f" {OmegaConf.to_yaml(optimizer_pipeline_params)}"
@@ -61,6 +78,21 @@ def optimize_model_pipeline(
 
 
 def opt_pipeline_start(cfg: DictConfig):
+    """Entry point for starting the model optimization pipeline.
+
+    This function is responsible for loading and validating the optimization
+    pipeline configuration using Marshmallow schemas. If the configuration is valid,
+    it proceeds to run the optimization pipeline. Otherwise, it logs and raises
+    a validation error.
+
+    Parameters:
+    - cfg (DictConfig): A configuration object loaded by OmegaConf, containing all
+      necessary settings for the optimization pipeline.
+
+    Raises:
+    - marshmallow.exceptions.ValidationError: If the configuration fails to validate,
+      indicating incorrect or missing parameters.
+    """
     schema = OptimizerPipelineParamsSchema()
     try:
         params = schema.load(cfg)

@@ -14,5 +14,37 @@
         "tuned_params": {
             "max_depth": 17.0
         }
+    },
+    {
+        "model_params": {
+            "max_depth": 5,
+            "max_depth_from": 5,
+            "max_depth_to": 20,
+            "model_type": "RandomForestRegressor",
+            "n_estimators": 10,
+            "random_state": 21,
+            "verbose": 1
+        },
+        "model_type": "RandomForestRegressor",
+        "timestamp": "2024-02-27 21:11:25",
+        "tuned_params": {
+            "max_depth": 18.0
+        }
+    },
+    {
+        "model_params": {
+            "max_depth": 5,
+            "max_depth_from": 5,
+            "max_depth_to": 20,
+            "model_type": "RandomForestRegressor",
+            "n_estimators": 10,
+            "random_state": 21,
+            "verbose": 1
+        },
+        "model_type": "RandomForestRegressor",
+        "timestamp": "2024-02-27 21:41:20",
+        "tuned_params": {
+            "max_depth": 19.0
+        }
     }
 ]

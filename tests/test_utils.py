@@ -9,7 +9,7 @@ def test_read_data(synthetic_data_path: str):
     df = read_data(synthetic_data_path)
 
     assert isinstance(df, pd.DataFrame)
-    assert (200, 2) == df.shape
+    assert (20000, 2) == df.shape
 
 
 def test_load_pkl_file(load_model_path: str):

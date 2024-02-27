@@ -1,5 +1,4 @@
 import logging.config
-from typing import NoReturn
 
 import marshmallow
 import numpy as np
@@ -19,7 +18,24 @@ logger = logging.getLogger("train_pipeline")
 
 def train_pipeline(
     training_pipeline_params: TrainingPipelineParams,
-) -> NoReturn:
+) -> None:
+    """Executes the training pipeline for machine learning models on time
+    series data.
+
+    This function handles the complete process of training a model, including:
+    - Reading the dataset from the specified path.
+    - Feature engineering based on the provided configurations.
+    - Splitting the data into training and testing sets following time series considerations.
+    - Selecting and initializing the model based on configuration.
+    - Performing cross-validation to evaluate model performance.
+    - Training the model on the entire dataset.
+    - Saving the trained model for future predictions.
+
+    Parameters:
+    - training_pipeline_params (TrainingPipelineParams): An object containing all necessary
+      parameters for the training pipeline, including paths for input data, model configuration,
+      and output paths for the trained model and evaluation metrics.
+    """
     logger.info(
         "Start train pipeline with params"
         f" {OmegaConf.to_yaml(training_pipeline_params)}"
@@ -73,6 +89,20 @@ def train_pipeline(
 
 
 def train_pipeline_start(cfg: DictConfig):
+    """Initiates the training pipeline process.
+
+    Validates the provided configuration using a schema. If the configuration passes validation,
+    the training pipeline is executed. Validation errors are logged and raised, halting the
+    process if the configuration is found to be invalid.
+
+    Parameters:
+    - cfg (DictConfig): A configuration object loaded by OmegaConf, containing all necessary
+      settings for the training pipeline process.
+
+    Raises:
+    - marshmallow.exceptions.ValidationError: Indicates failure in configuration validation,
+      pointing to incorrect or missing parameters.
+    """
     schema = TrainingPipelineParamsSchema()
     try:
         params = schema.load(cfg)

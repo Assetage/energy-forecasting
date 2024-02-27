@@ -5,7 +5,13 @@ import pytest
 import pandas as pd
 from faker import Faker
 
-ROW_NUMS = 200
+from src.energy_forecasting.entities import (
+    FeatureParams,
+    PredictParams,
+    PredictingPipelineParams,
+)
+
+ROW_NUMS = 20000
 
 
 @pytest.fixture(scope="session")
@@ -24,12 +30,12 @@ def load_model_path() -> str:
 
 
 @pytest.fixture(scope="session")
-def metric_path() -> str:
-    return "tests/test_metrics.json"
+def output_plot_path() -> str:
+    return "tests/test_predictions_plot.png"
 
 
 @pytest.fixture(scope="session")
-def synthetic_data() -> pd.DataFrame:
+def synthetic_data(synthetic_data_path: str) -> pd.DataFrame:
     fake = Faker()
     Faker.seed(21)
     df = {
@@ -43,5 +49,47 @@ def synthetic_data() -> pd.DataFrame:
             fake.pyint(min_value=2000, max_value=8000) for _ in range(ROW_NUMS)
         ],
     }
-
+    df.to_csv(synthetic_data_path, index=False)
     return pd.DataFrame(data=df)
+
+
+@pytest.fixture(scope="session")
+def datetime_col() -> str:
+    return "Datetime"
+
+
+@pytest.fixture(scope="session")
+def target_col() -> str:
+    return "PJMW_MW"
+
+
+@pytest.fixture(scope="session")
+def feature_params(datetime_col: str, target_col: str) -> FeatureParams:
+    fp = FeatureParams(datetime_col=datetime_col, target_col=target_col)
+    return fp
+
+
+@pytest.fixture(scope="session")
+def predict_params(
+    synthetic_data_path: str,
+    output_predictions_path: str,
+    output_plot_path: str,
+    load_model_path: str,
+) -> PredictParams:
+    pp = PredictParams(
+        input_data_path=synthetic_data_path,
+        output_data_path=output_predictions_path,
+        output_plot_path=output_plot_path,
+        model_path=load_model_path,
+    )
+    return pp
+
+
+@pytest.fixture(scope="package")
+def predict_pipeline_params(
+    predict_params: PredictParams, feature_params: FeatureParams
+) -> PredictingPipelineParams:
+    pred_pipeline_params = PredictingPipelineParams(
+        predict_params=predict_params, feature_params=feature_params
+    )
+    return pred_pipeline_params

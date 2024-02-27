@@ -12,9 +12,6 @@ dynamic = ["dependencies", "optional-dependencies", "version"]
 [tool.setuptools.dynamic.dependencies]
 file = ["requirements.txt"]
 
-[tool.setuptools.dynamic.optional-dependencies]
-dev = { file = ["requirements-dev.txt"] }
-
 [tool.setuptools_scm]
 write_to = "src/energy_forecasting/_version.py"
 
@@ -22,7 +19,17 @@ write_to = "src/energy_forecasting/_version.py"
 where = ["src"]
 
 [tool.setuptools.package-data]
-"*" = ["py.typed", "./data/*", "./conf/*"]
+"energy_forecasting" = [
+    "py.typed",
+    "conf/*",
+    "conf/feature_params/*",
+    "conf/optimizer_params/*",
+    "conf/path_config/*",
+    "conf/pipeline/*",
+    "conf/predict_params/*",
+    "conf/splitting_params/*",
+    "conf/train_params/*",
+]
 
 [project.scripts]
 energy_forecasting = "energy_forecasting.__main__:main"
@@ -92,3 +99,4 @@ exclude = ["tests", "setup.py"]
 [tool.pytest.ini_options]
 minversion = "6.0"
 testpaths = ["tests"]
+addopts = "-p no:warnings"

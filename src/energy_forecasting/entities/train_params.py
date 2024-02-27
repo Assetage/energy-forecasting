@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 
 
 @dataclass()
-class LogRegParams:
+class LinRegParams:
     model_type: str = field(default="LinearRegression")
 
 

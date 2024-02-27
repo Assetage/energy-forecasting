@@ -1,6 +1,9 @@
 # Hourly Energy Consumption
 
 This project based on https://www.kaggle.com/datasets/robikscube/hourly-energy-consumption
+My project is focused on productionizing the approach applied the data from the kaggle notebook.
+From my perspective I only changed the input data (took another dataset from the Kaggle project data) and did some minor changes to the notebook.
+So finally, I took the complete notebook and build the package on top of it.
 
 ### 📖 Description
 
@@ -34,9 +37,9 @@ ______________________________________________________________________
 ├── LICENSE
 ├── README.md
 ├── data
-│   └── raw                                     <- The original, immutable data dump.
+│   └── raw                                     <- The original, immutable data dump taken from kaggle project
 ├── models                                      <- Trained and serialized models, model predictions, or model summaries
-├── notebooks                                   <- Jupyter notebooks
+├── notebooks                                   <- Jupyter notebooks taken from kaggle project
 ├── outputs                                     <- Hydra logs
 ├── pyproject.toml                              <- .toml file to define a project package and make it installable (pip install -e .)
 ├── requirements.txt                            <- requirements for correct installation of the project package

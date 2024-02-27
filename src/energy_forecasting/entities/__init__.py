@@ -10,7 +10,7 @@ from .predict_pipeline_params import (
     PredictingPipelineParams,
 )
 from .split_params import SplittingParams
-from .train_params import LogRegParams, MLPParams, RandomForestParams
+from .train_params import LinRegParams, MLPParams, RandomForestParams
 from .train_pipeline_params import TrainingPipelineParams, TrainingPipelineParamsSchema
 
 __all__ = [
@@ -18,7 +18,7 @@ __all__ = [
     "SplittingParams",
     "TrainingPipelineParams",
     "TrainingPipelineParamsSchema",
-    "LogRegParams",
+    "LinRegParams",
     "RandomForestParams",
     "MLPParams",
     "PredictingPipelineParams",

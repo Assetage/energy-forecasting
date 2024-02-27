@@ -12,14 +12,27 @@ from sklearn.neural_network import MLPRegressor
 
 from ..entities.feature_params import FeatureParams
 from ..entities.optimizer_params import MLPOptParams, RandomForestOptParams
-from ..entities.train_params import LogRegParams, MLPParams, RandomForestParams
+from ..entities.train_params import LinRegParams, MLPParams, RandomForestParams
 
 SklearnRegressorModel = Union[RandomForestRegressor, LinearRegression, MLPRegressor]
 
 
 def select_model(
-    train_params: Union[LogRegParams, RandomForestParams, MLPParams],
+    train_params: Union[LinRegParams, RandomForestParams, MLPParams],
 ) -> SklearnRegressorModel:
+    """Select and initialize a machine learning model based on training
+    parameters.
+
+    Parameters:
+    - train_params (Union[LinRegParams, RandomForestParams, MLPParams]): Parameters specific to the model to be trained.
+
+    Returns:
+    - SklearnRegressorModel: An instance of the selected machine learning model.
+
+    This function initializes a machine learning model with the provided parameters. It supports RandomForestRegressor,
+    LinearRegression, and MLPRegressor. For RandomForestRegressor and MLPRegressor, additional parameters can be provided
+    to adjust model complexity.
+    """
     model_type = train_params["model_type"]
 
     if model_type == "RandomForestRegressor":
@@ -59,6 +72,19 @@ def train_model(
     model: SklearnRegressorModel,
     params: FeatureParams,
 ) -> SklearnRegressorModel:
+    """Train a given machine learning model on the provided dataset.
+
+    Parameters:
+    - df_sorted (pd.DataFrame): The sorted DataFrame containing the features and target variable.
+    - model (SklearnRegressorModel): The machine learning model to be trained.
+    - params (FeatureParams): Parameters including the name of the target variable.
+
+    Returns:
+    - SklearnRegressorModel: The trained machine learning model.
+
+    This function trains the model on the entire dataset. It separates the features and target variable based on
+    the provided parameters and uses the model's fit method.
+    """
     target = params.target_col
     features = df_sorted.drop(columns=[target]).columns
     x_all = df_sorted[features]
@@ -73,6 +99,21 @@ def run_cross_validation(
     params: FeatureParams,
     model: SklearnRegressorModel,
 ) -> list:
+    """Perform cross-validation on a time series dataset using a given model
+    and return the scores.
+
+    Parameters:
+    - df_sorted (pd.DataFrame): The sorted DataFrame to be used for cross-validation.
+    - tss (TimeSeriesSplit): The TimeSeriesSplit instance defining the cross-validation strategy.
+    - params (FeatureParams): Parameters including the name of the target variable.
+    - model (SklearnRegressorModel): The machine learning model to evaluate.
+
+    Returns:
+    - list: A list of scores obtained from each fold of the cross-validation.
+
+    This function iterates over the folds of a time series split, trains the model on the training set, and evaluates it
+    on the test set. It collects the mean squared error for each fold.
+    """
     preds = []
     scores = []
     for train_idx, val_idx in tss.split(df_sorted):
@@ -105,6 +146,22 @@ def objective(
     base_model: SklearnRegressorModel,
     hyperparams: dict,
 ) -> dict[str, Any]:
+    """Objective function for hyperparameter optimization using cross-
+    validation.
+
+    Parameters:
+    - df_sorted (pd.DataFrame): The sorted DataFrame for cross-validation.
+    - tss (TimeSeriesSplit): The TimeSeriesSplit instance for cross-validation strategy.
+    - params (FeatureParams): Feature parameters including the target variable.
+    - base_model (SklearnRegressorModel): The base model to be optimized.
+    - hyperparams (dict): The hyperparameters to be tested.
+
+    Returns:
+    - dict[str, Any]: A dictionary with the optimization result, containing the loss and status.
+
+    This function clones the base model, sets the hyperparameters, runs cross-validation, and calculates the mean
+    of the cross-validation scores as the objective to minimize.
+    """
     model = clone(base_model)
     model.set_params(**hyperparams)
     scores = run_cross_validation(df_sorted, tss, params, model)
@@ -116,6 +173,19 @@ def objective(
 def define_space(
     model_type: str, optimizer_params: Union[RandomForestOptParams, MLPOptParams]
 ) -> dict[str, Any]:
+    """Define the search space for hyperparameter optimization based on the
+    model type and optimization parameters.
+
+    Parameters:
+    - model_type (str): The type of the model for which the search space is defined.
+    - optimizer_params (Union[RandomForestOptParams, MLPOptParams]): The parameters that define the bounds of the search space.
+
+    Returns:
+    - dict[str, Any]: The hyperparameter search space.
+
+    Depending on the model type, this function defines a search space for hyperparameters using distributions and ranges
+    specified in the optimizer parameters. Currently supports MLPRegressor and RandomForestRegressor.
+    """
     if model_type == "MLPRegressor":
         max_layers = 3
         space = {
